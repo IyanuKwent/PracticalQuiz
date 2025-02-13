@@ -1,0 +1,82 @@
+from django.contrib.auth.models import User
+
+User.objects.create_user(username="ice", password="Lrn127995120553")
+User.objects.create_user(username="dragons", password="Lrn127995120553")
+User.objects.create_user(username="iyanu", password="Lrn127995120553")  
+User.objects.create_user(username="kwent", password="Lrn127995120553")
+User.objects.create_user(username="freezing", password="Lrn127995120553")
+User.objects.create_user(username="contact", password="Lrn127995120553") 
+
+
+
+from the_finale.models import Vehicle
+
+
+boat = Vehicle.objects.create(type="Water", model="Boat", transmission="Manual", fuel_type="Diesel", price_per_day=500.00)
+helicopter = Vehicle.objects.create(type="Air", model="Helicopter", transmission="Automatic", fuel_type="Jet Fuel", price_per_day=1500.00)
+monster_truck = Vehicle.objects.create(type="Land", model="Monster Truck", transmission="Manual", fuel_type="Gasoline", price_per_day=800.00)
+
+from the_finale.models import Booking, Vehicle, User, Location
+from datetime import date
+
+# Fetch the vehicles
+boat = Vehicle.objects.get(model="Boat")
+helicopter = Vehicle.objects.get(model="Helicopter")
+monster_truck = Vehicle.objects.get(model="Monster Truck")
+
+
+ice = User.objects.get(username="ice")
+dragons = User.objects.get(username="dragons")
+iyanu = User.objects.get(username="iyanu")
+kwent = User.objects.get(username="kwent")
+freezing = User.objects.get(username="freezing")
+contact = User.objects.get(username="contact")
+
+from the_finale.models import Location
+
+
+location_1 = Location.objects.create(name="Golden Friendship", address="Yacapin St.123", city="Cagayan De Or
+o")
+location_2 = Location.objects.create(name="Dear Joe", address="Cerritos Camilla", city="Canito An")  
+location_3 = Location.objects.create(name="Janilles Eatery", address="Mapula Merkado", city="Pagatpat")
+
+
+from the_finale.models import Booking, Vehicle, User, Location
+from datetime import date
+
+ice = User.objects.get(username="ice")
+dragons = User.objects.get(username="dragons")
+iyanu = User.objects.get(username="iyanu")
+kwent = User.objects.get(username="kwent")
+freezing = User.objects.get(username="freezing")
+contact = User.objects.get(username="contact")
+
+golden_friendship = Location.objects.get(name="Golden Friendship")
+dear_joe = Location.objects.get(name="Dear Joe")
+janilles_eatery = Location.objects.get(name="Janilles Eatery")
+
+
+bookings = [
+    Booking(user=ice, vehicle=boat, payment_status="failed", location=golden_friendship, start_date=date(2023, 2, 13), end_date=date(2025, 2, 25)),
+    Booking(user=dragons, vehicle=helicopter, payment_status="failed", location=dear_joe, start_date=date(2025, 2, 13), end_date=date(2026, 2, 25)),
+    Booking(user=iyanu, vehicle=monster_truck, payment_status="successful", location=janilles_eatery, start_date=date(2024, 2, 13), end_date=date(2025, 2, 25)),
+    Booking(user=kwent, vehicle=boat, payment_status="successful", location=golden_friendship, start_date=date(2025, 2, 13), end_date=date(2029, 2, 25)),
+    Booking(user=freezing, vehicle=helicopter, payment_status="successful", location=golden_friendship, start_date=date(2025, 2, 13), end_date=date(2025, 2, 25)),
+    Booking(user=contact, vehicle=boat, payment_status="successful", location=dear_joe, start_date=date(2020, 2, 13), end_date=date(2028, 2, 25)),
+    Booking(user=ice, vehicle=monster_truck, payment_status="successful", location=golden_friendship, start_date=date(2025, 2, 13), end_date=date(2027, 2, 25)),
+    Booking(user=dragons, vehicle=helicopter, payment_status="successful", location=dear_joe, start_date=date(2021, 2, 13), end_date=date(2025, 2, 25)),
+    Booking(user=iyanu, vehicle=boat, payment_status="successful", location=golden_friendship, start_date=date(2015, 2, 13), end_date=date(2025, 2, 25)),
+    Booking(user=kwent, vehicle=monster_truck, payment_status="successful", location=janilles_eatery, start_date=date(2015, 2, 13), end_date=date(2025, 2, 25)),
+]
+
+
+Booking.objects.bulk_create(bookings)
+
+successful = Booking.objects.filter(payment_status='successful')
+
+unsuccessful = Booking.objects.filter(payment_status='failed')
+
+from django.db.models import Avg
+
+average = Booking.objects.filter(payment_status='successful').aggregate(Avg('vehicle__price_per_day'))
+
